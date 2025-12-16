@@ -72,7 +72,7 @@ const CarrinhoDeCompras: React.FC = () => {
                           }
                           className="flex items-center px-3 h-full hover:bg-gray-300"
                         >
-                          <FiMinus />
+                          <React.Fragment>{FiMinus({})}</React.Fragment>
                         </button>
                         <span className="mx-3">{item.quantity || 1}</span>
                         <button
@@ -81,7 +81,7 @@ const CarrinhoDeCompras: React.FC = () => {
                           }
                           className="flex items-center px-3 h-full hover:bg-gray-300"
                         >
-                          <FiPlus />
+                          <React.Fragment>{FiPlus({})}</React.Fragment>
                         </button>
                       </div>
                     </td>
@@ -91,7 +91,7 @@ const CarrinhoDeCompras: React.FC = () => {
                         onClick={() => removeFromCart(item.id)}
                         className="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-300"
                       >
-                        <FiX />
+                        <React.Fragment>{FiX({})}</React.Fragment>
                       </button>
                     </td>
                   </tr>
@@ -115,7 +115,8 @@ const CarrinhoDeCompras: React.FC = () => {
                 </div>
                 <div>
                   <button className="text-sky-custom bg-transparent border-0 flex items-center text-base">
-                    Adicionar cupom <FiPlus />
+                    Adicionar cupom{" "}
+                    <React.Fragment>{FiPlus({})}</React.Fragment>
                   </button>
                 </div>
               </div>
