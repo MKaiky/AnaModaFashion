@@ -53,6 +53,80 @@ const orixas: Orixa[] = [
 const Sobre: React.FC = () => {
   const [openId, setOpenId] = useState<number | null>(null);
 
+<<<<<<< HEAD
+=======
+  const togglePasta = (id: number) => {
+    setOpenId(openId === id ? null : id);
+  };
+
+  const orixas = [
+    {
+      id: 1,
+      name: "OXALÁ",
+      color: "bg-pastel-white",
+      emoji: "🕊️",
+      title: "Oxalá: O Pai da Criação e da Paz",
+      desc: "O Branco evoca a pureza, a calma, a sabedoria e a origem de todas as coisas. É a luz suave do princípio. Domínio: Céu, criação, ar, paz e a essência da vida. Saudação: Epa Babá! Características: A divindade maior, pacificador e benevolente. Rege a vida, a saúde, a moralidade e a ordem. É o grande orixá que estabelece a harmonia.",
+    },
+    {
+      id: 2,
+      name: "YEMENJÁ",
+      color: "bg-pastel-blue",
+      emoji: "🌊",
+      title: "Yemanjá: A Mãe das Águas e da Vida",
+      desc: "O Azul reflete a serenidade, a profundidade e a vastidão acolhedora dos oceanos. Representa a maternidade, a proteção e a fluidez da existência. Domínio: Mares, lagos, águas salgadas, maternidade e a vida. Saudação: Odoyá! Características: Protetora da família, generosa e sábia. É a grande mãe que nutre e acalma, mas que também pode mostrar a força incontrolável das marés.",
+    },
+    {
+      id: 3,
+      name: "OXUM",
+      color: "bg-pastel-yellow",
+      emoji: "👑",
+      title: "Oxum: A Senhora da Beleza e do Amor",
+      desc: "O Amarelo simboliza a doçura, a beleza, o amor, a prosperidade e a fertilidade. Remete ao mel, ao ouro e ao brilho suave do sol nas águas doces. Domínio: Rios, cachoeiras, águas doces, amor, beleza e riqueza. Saudação: Ora Yê Yê Ô! Características: Vaidosa, sensual e ligada à fertilidade e à sedução. Traz a doçura, o encanto e o cuidado, com a astúcia de quem sabe usar o charme para conquistar.",
+    },
+    {
+      id: 4,
+      name: "OXÓSSI",
+      color: "bg-pastel-green",
+      emoji: "🏹",
+      title: "Oxóssi: O Caçador da Abundância",
+      desc: "O Verde representa a natureza em sua forma mais leve, a fartura, a caça, o conhecimento e a prosperidade. É a cor da expansão e do sustento vindo das matas. Domínio: Matas, florestas, caça, fartura, conhecimento e provisão. Saudação: Okê Arô! Características: Inteligente, ágil e provedor. É o Orixá da fartura, que busca o conhecimento e o sustento, sempre generoso com seus filhos.",
+    },
+    {
+      id: 5,
+      name: "IANSÃ",
+      color: "bg-pastel-pink",
+      emoji: "⚡",
+      title: "Iansã/Oyá: A Guerreira dos Ventos",
+      desc: "O Rosa evoca a paixão, a transformação, o movimento e a coragem, mas com uma suavidade que representa a capacidade de renovação após a tempestade. Domínio: Ventos, tempestades, raios, transformações e a passagem para a vida após a morte (Eguns). Saudação: Eparrey! Características: Guerreira destemida, independente e de temperamento forte, porém justa. Governa as mudanças e remove os obstáculos, sempre em movimento.",
+    },
+    {
+      id: 6,
+      name: "XANGÔ",
+      color: "bg-pastel-brown",
+      emoji: "⚖️",
+      title: "Xangô: O Rei da Justiça e do Trovão",
+      desc: "O Marrom simboliza a justiça, a realeza, a estabilidade e a força da terra. Remete à autoridade e à retidão. Domínio: Justiça, fogo, raios, trovões, pedreiras e as leis divinas. Saudação: Kaô Kabecile! Características: Rei, justo e de forte personalidade. É o Orixá que pune os injustos e protege os oprimidos, sempre com equilíbrio e sabedoria.",
+    },
+    {
+      id: 7,
+      name: "NANÃ BURUQUÊ",
+      color: "bg-pastel-lavender",
+      emoji: "👵",
+      title: "Nanã Buruquê: A Anciã da Sabedoria",
+      desc: "O Lilás representa a sabedoria ancestral, a espiritualidade profunda, a calma, a transmutação e o mistério. É a cor da senilidade e do ciclo da vida. Domínio: Lodos, pântanos, lama primordial, morte e renascimento. Saudação: Saluba Nanã! Características: A mais velha das Orixás, pacífica, paciente e sábia. É a senhora da lama primordial de onde toda a vida se originou e a guardiã do portal final.",
+    },
+    {
+      id: 8,
+      name: "OBALUAÊ / OMULU",
+      color: "bg-pastel-gray",
+      emoji: "🙏",
+      title: "Obaluaê/Omulu: O Senhor da Cura e da Terra",
+      desc: "O Cinza simboliza a cura, a renovação, o silêncio, o respeito e o mistério da vida e da morte. Remete à terra, à transformação e à superação. Domínio: Terra, doenças, saúde, cura, transformação e passagem (cemitérios). Saudação: Atotô! Características: Orixá da terra, da saúde e da doença. Traz a cura e a proteção, mas também impõe respeito através de seu mistério e seu poder sobre os ciclos da vida e da morte.",
+    },
+  ];
+
+>>>>>>> d2d0ec29a1b52ac8ec890a1941868a1b0091f052
   return (
     <section className="bg-gray-50 text-gray-800">
       {/* INTRO */}
