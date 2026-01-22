@@ -1,97 +1,213 @@
+/**
+ * Página Catálogo
+ *
+ * Responsável por:
+ * - Exibir a lista completa de produtos
+ * - Permitir busca por nome
+ * - Filtrar produtos por categoria
+ * - Exibir detalhes do produto em modal
+ * - Adicionar produtos ao carrinho
+ */
+
 import React, { useMemo, useState } from "react";
 import { useCart } from "../context/CartContext";
 
-type Product = {
+// Imagens dos produtos
+import imagem1 from "../assets/images/imagem1.png";
+import imagem2 from "../assets/images/imagem2.png";
+import imagem3 from "../assets/images/imagem3.png";
+import imagem4 from "../assets/images/imagem4.png";
+import imagem5 from "../assets/images/imagem5.png";
+import imagem6 from "../assets/images/imagem6.png";
+import imagem7 from "../assets/images/imagem7.png";
+import imagem8 from "../assets/images/imagem8.png";
+import imagem9 from "../assets/images/imagem9.png";
+import imagem10 from "../assets/images/imagem10.png";
+import imagem11 from "../assets/images/imagem11.png";
+import imagem12 from "../assets/images/imagem12.png";
+
+/**
+ * Tipagem de um produto do catálogo
+ */
+export type Produto = {
+  /** Identificador único */
   id: number;
-  title: string;
-  desc: string;
-  price: number;
-  img: string;
-  category: string;
+
+  /** Nome do produto */
+  titulo: string;
+
+  /** Descrição detalhada */
+  descricao: string;
+
+  /** Preço do produto */
+  preco: number;
+
+  /** Imagem do produto */
+  imagem: string;
+
+  /** Categoria (anel, colar, pulseira, brinco) */
+  categoria: string;
 };
 
-const productsData: Product[] = [
+/**
+ * Lista fixa de produtos do catálogo
+ * (Simula um banco de dados)
+ */
+const listaProdutos: Produto[] = [
   {
     id: 1,
-    title: "Anel Prata 925 Minimal",
-    desc: "Anel delicado em prata 925 com acabamento polido.",
-    price: 129.9,
-    img: "https://via.placeholder.com/400x400",
-    category: "aneis",
+    titulo: "Anel Prata 925 Minimal",
+    descricao: "Anel delicado em prata 925 com acabamento polido.",
+    preco: 129.9,
+    imagem: imagem1,
+    categoria: "aneis",
   },
   {
     id: 2,
-    title: "Colar Coração Prata",
-    desc: "Colar em prata 925 com pingente de coração.",
-    price: 189.9,
-    img: "https://via.placeholder.com/400x400",
-    category: "colares",
+    titulo: "Anel Prata Texturizado",
+    descricao: "Design moderno com textura artesanal.",
+    preco: 149.9,
+    imagem: imagem2,
+    categoria: "aneis",
   },
   {
     id: 3,
-    title: "Pulseira Elo Fino",
-    desc: "Pulseira feminina em prata 925.",
-    price: 159.9,
-    img: "https://via.placeholder.com/400x400",
-    category: "pulseiras",
+    titulo: "Colar Coração Prata",
+    descricao: "Colar em prata 925 com pingente de coração.",
+    preco: 189.9,
+    imagem: imagem3,
+    categoria: "colares",
   },
   {
     id: 4,
-    title: "Brinco Argola Prata",
-    desc: "Argola clássica em prata 925.",
-    price: 99.9,
-    img: "https://via.placeholder.com/400x400",
-    category: "brincos",
+    titulo: "Colar Lua Prata",
+    descricao: "Colar místico inspirado na lua.",
+    preco: 199.9,
+    imagem: imagem4,
+    categoria: "colares",
+  },
+  {
+    id: 5,
+    titulo: "Pulseira Elo Fino",
+    descricao: "Pulseira feminina em prata 925.",
+    preco: 159.9,
+    imagem: imagem5,
+    categoria: "pulseiras",
+  },
+  {
+    id: 6,
+    titulo: "Pulseira Prata Grossa",
+    descricao: "Pulseira robusta e elegante.",
+    preco: 179.9,
+    imagem: imagem6,
+    categoria: "pulseiras",
+  },
+  {
+    id: 7,
+    titulo: "Brinco Argola Prata",
+    descricao: "Argola clássica em prata 925.",
+    preco: 99.9,
+    imagem: imagem7,
+    categoria: "brincos",
+  },
+  {
+    id: 8,
+    titulo: "Brinco Pequeno Prata",
+    descricao: "Brinco delicado para o dia a dia.",
+    preco: 89.9,
+    imagem: imagem8,
+    categoria: "brincos",
+  },
+  {
+    id: 9,
+    titulo: "Anel Ajustável Prata",
+    descricao: "Anel versátil com ajuste confortável.",
+    preco: 139.9,
+    imagem: imagem9,
+    categoria: "aneis",
+  },
+  {
+    id: 10,
+    titulo: "Colar Medalha Prata",
+    descricao: "Colar com medalha simbólica.",
+    preco: 209.9,
+    imagem: imagem10,
+    categoria: "colares",
+  },
+  {
+    id: 11,
+    titulo: "Pulseira Trançada",
+    descricao: "Pulseira com design trançado artesanal.",
+    preco: 169.9,
+    imagem: imagem11,
+    categoria: "pulseiras",
+  },
+  {
+    id: 12,
+    titulo: "Brinco Orgânico Prata",
+    descricao: "Formato orgânico inspirado na natureza.",
+    preco: 119.9,
+    imagem: imagem12,
+    categoria: "brincos",
   },
 ];
 
+/**
+ * Componente Catálogo
+ */
 const Catalogo: React.FC = () => {
+  /** Função para adicionar produto ao carrinho */
   const { addToCart } = useCart();
 
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("");
-  const [modalProduct, setModalProduct] = useState<Product | null>(null);
+  /** Texto digitado na busca */
+  const [busca, setBusca] = useState<string>("");
 
-  const filteredProducts = useMemo(() => {
-    return productsData.filter((product) => {
-      const matchSearch = product.title
+  /** Categoria selecionada no filtro */
+  const [categoriaSelecionada, setCategoriaSelecionada] =
+    useState<string>("");
+
+  /** Produto atualmente exibido no modal */
+  const [produtoModal, setProdutoModal] =
+    useState<Produto | null>(null);
+
+  /**
+   * Lista de produtos filtrada
+   * - Filtra pelo nome
+   * - Filtra pela categoria
+   */
+  const produtosFiltrados = useMemo(() => {
+    return listaProdutos.filter((produto) => {
+      const correspondeBusca = produto.titulo
         .toLowerCase()
-        .includes(search.toLowerCase());
+        .includes(busca.toLowerCase());
 
-      const matchCategory = category
-        ? product.category === category
+      const correspondeCategoria = categoriaSelecionada
+        ? produto.categoria === categoriaSelecionada
         : true;
 
-      return matchSearch && matchCategory;
+      return correspondeBusca && correspondeCategoria;
     });
-  }, [search, category]);
+  }, [busca, categoriaSelecionada]);
 
   return (
     <section className="min-h-screen bg-gray-50 px-6 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-gray-800">
-          Catálogo Yabas Pratas
-        </h1>
-        <p className="text-gray-500 mt-1">
-          Joias em prata 925 feitas para brilhar com você ✨
-        </p>
-      </div>
+      <h1 className="text-3xl font-semibold mb-6">
+        Catálogo Yabás Pratas
+      </h1>
 
-      {/* Filtros */}
+      {/* ===== FILTROS ===== */}
       <div className="flex flex-col md:flex-row gap-3 mb-10">
         <input
-          type="text"
           placeholder="Buscar joia..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full md:w-1/2 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          value={busca}
+          onChange={(e) => setBusca(e.target.value)}
+          className="rounded-lg border px-4 py-2"
         />
 
         <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="w-full md:w-1/4 rounded-lg border border-gray-300 px-4 py-2"
+          value={categoriaSelecionada}
+          onChange={(e) => setCategoriaSelecionada(e.target.value)}
+          className="rounded-lg border px-4 py-2"
         >
           <option value="">Todas as categorias</option>
           <option value="aneis">Anéis</option>
@@ -102,44 +218,41 @@ const Catalogo: React.FC = () => {
 
         <button
           onClick={() => {
-            setSearch("");
-            setCategory("");
+            setBusca("");
+            setCategoriaSelecionada("");
           }}
-          className="md:w-1/4 rounded-lg bg-gray-200 hover:bg-gray-300 transition px-4 py-2"
+          className="bg-gray-200 rounded-lg px-4 py-2"
         >
           Limpar filtros
         </button>
       </div>
 
-      {/* Grid */}
+      {/* ===== GRID DE PRODUTOS ===== */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
+        {produtosFiltrados.map((produto) => (
           <div
-            key={product.id}
-            className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden"
+            key={produto.id}
+            className="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden"
           >
             <img
-              src={product.img}
-              alt={product.title}
+              src={produto.imagem}
+              alt={produto.titulo}
               className="h-64 w-full object-cover"
             />
 
             <div className="p-4">
-              <h3 className="font-medium text-gray-800">
-                {product.title}
-              </h3>
-
-              <p className="text-sm text-gray-500 mt-1">
-                {product.desc}
+              <h3 className="font-medium">{produto.titulo}</h3>
+              <p className="text-sm text-gray-500">
+                {produto.descricao}
               </p>
 
-              <p className="mt-3 text-lg font-semibold text-gray-900">
-                R$ {product.price.toFixed(2)}
+              <p className="mt-2 font-semibold">
+                R$ {produto.preco.toFixed(2)}
               </p>
 
               <button
-                onClick={() => setModalProduct(product)}
-                className="mt-4 w-full rounded-full border border-gray-800 py-2 hover:bg-gray-800 hover:text-white transition"
+                onClick={() => setProdutoModal(produto)}
+                className="mt-4 w-full border rounded-full py-2 hover:bg-gray-800 hover:text-white"
               >
                 Ver detalhes
               </button>
@@ -148,47 +261,46 @@ const Catalogo: React.FC = () => {
         ))}
       </div>
 
-      {/* Modal */}
-      {modalProduct && (
+      {/* ===== MODAL DE DETALHES ===== */}
+      {produtoModal && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-          onClick={() => setModalProduct(null)}
+          className="fixed inset-0 bg-black/50 flex items-center justify-center"
+          onClick={() => setProdutoModal(null)}
         >
           <div
-            className="bg-white rounded-2xl max-w-md w-full p-6 relative"
+            className="bg-white p-6 rounded-2xl max-w-md w-full"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              onClick={() => setModalProduct(null)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-            >
-              ✕
-            </button>
-
             <img
-              src={modalProduct.img}
-              alt={modalProduct.title}
+              src={produtoModal.imagem}
               className="rounded-xl mb-4"
             />
 
             <h2 className="text-xl font-semibold">
-              {modalProduct.title}
+              {produtoModal.titulo}
             </h2>
 
             <p className="text-gray-500 mt-2">
-              {modalProduct.desc}
+              {produtoModal.descricao}
             </p>
 
             <p className="mt-4 text-2xl font-bold">
-              R$ {modalProduct.price.toFixed(2)}
+              R$ {produtoModal.preco.toFixed(2)}
             </p>
 
             <button
               onClick={() => {
-                addToCart(modalProduct);
-                setModalProduct(null);
+                addToCart({
+                id: produtoModal.id,
+                title: produtoModal.titulo,
+                desc: produtoModal.descricao,
+                price: produtoModal.preco,
+                img: produtoModal.imagem,
+                category: produtoModal.categoria,
+              });
+                setProdutoModal(null);
               }}
-              className="mt-6 w-full bg-gray-900 text-white py-3 rounded-full hover:bg-gray-700 transition"
+              className="mt-6 w-full bg-gray-900 text-white py-3 rounded-full"
             >
               Adicionar ao carrinho
             </button>

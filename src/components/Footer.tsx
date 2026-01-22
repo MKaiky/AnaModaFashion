@@ -3,9 +3,27 @@ import { Instagram, Facebook, Mail, Phone } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import logo from "../assets/images/logo-branca.png";
 
+/**
+ * Componente Footer
+ *
+ * Responsável por exibir o rodapé da aplicação.
+ * Contém informações institucionais, contatos, redes sociais
+ * e se adapta automaticamente ao tema (claro/escuro).
+ *
+ * Utiliza:
+ * - React Router para navegação interna
+ * - Context API para controle de tema
+ * - Tailwind CSS para estilização
+ */
 const Footer = () => {
+  /**
+   * Obtém o tema atual da aplicação através do ThemeContext
+   */
   const { theme } = useTheme();
 
+  /**
+   * Define as classes CSS dinamicamente de acordo com o tema ativo
+   */
   const themeClasses =
     theme === "light"
       ? "bg-sky-custom text-gray-800"
@@ -15,7 +33,7 @@ const Footer = () => {
     <footer className={`${themeClasses} transition-colors duration-300`}>
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
 
-        {/* Logo */}
+        {/* Seção: Logo e descrição da marca */}
         <div>
           <img src={logo} alt="Yabás Pratas" className="h-14 mb-4" />
           <p className="text-sm opacity-90">
@@ -23,7 +41,7 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Institucional */}
+        {/* Seção: Links institucionais */}
         <div>
           <h3 className="text-sm font-semibold uppercase mb-4">
             Institucional
@@ -36,7 +54,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Atendimento */}
+        {/* Seção: Informações de atendimento */}
         <div>
           <h3 className="text-sm font-semibold uppercase mb-4">
             Atendimento
@@ -52,7 +70,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Redes */}
+        {/* Seção: Redes sociais */}
         <div>
           <h3 className="text-sm font-semibold uppercase mb-4">
             Siga-nos
@@ -64,6 +82,7 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* Direitos autorais */}
       <div className="border-t border-black/10">
         <div className="max-w-7xl mx-auto px-6 py-4 text-sm text-center opacity-80">
           © {new Date().getFullYear()} Yabás Pratas. Todos os direitos reservados.

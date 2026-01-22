@@ -1,80 +1,135 @@
+/**
+ * Página de Login
+ *
+ * Responsável por:
+ * - Capturar e validar credenciais do usuário
+ * - Simular autenticação
+ * - Redirecionar para o catálogo
+ * - Preparar estrutura para futuras funcionalidades
+ */
+
 import { useState, useRef } from "react";
-import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { FaUser, FaLock } from "react-icons/fa";
 
-// Tipagem explícita para ícones
-const FaUserIcon = FaUser as React.ComponentType<{ className?: string; onClick?: () => void }>;
-const FaLockIcon = FaLock as React.ComponentType<{ className?: string; onClick?: () => void }>;
+/**
+ * Tipagem explícita dos ícones
+ * Evita conflitos de tipagem no React + TypeScript
+ */
+const IconeUsuario =
+  FaUser as React.ComponentType<{ className?: string; onClick?: () => void }>;
 
-const Login = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+const IconeSenha =
+  FaLock as React.ComponentType<{ className?: string; onClick?: () => void }>;
+
+/**
+ * Componente Login
+ */
+const Login: React.FC = () => {
+  /** Estado do e-mail do usuário */
+  const [email, setEmail] = useState<string>("");
+
+  /** Estado da senha do usuário */
+  const [senha, setSenha] = useState<string>("");
+
+  /** Navegação entre páginas */
   const navigate = useNavigate();
 
-  // Refs para focar nos inputs
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  /** Referência para o input de e-mail */
+  const emailRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  /** Referência para o input de senha */
+  const senhaRef = useRef<HTMLInputElement>(null);
+
+  /**
+   * Manipula o envio do formulário
+   * @param event Evento de submit do formulário
+   */
+  const handleSubmit = (
+    event: React.FormEvent<HTMLFormElement>
+  ): void => {
     event.preventDefault();
-    console.log("Dados de Login:", { username, password });
-    if (username && password) {
-      navigate('/catalogo');
+
+    console.log("Dados de Login:", { email, senha });
+
+    if (email && senha) {
+      navigate("/catalogo");
     } else {
       alert("Preencha e-mail e senha!");
     }
   };
 
-  // Funções para os "links" (placeholders para funcionalidades futuras)
-  const handleForgotPassword = () => {
-    alert("Funcionalidade de recuperação de senha em desenvolvimento!");
-    // Futuro: navigate('/recuperar-senha');
+  /**
+   * Ação para recuperação de senha
+   * (Funcionalidade futura)
+   */
+  const handleForgotPassword = (): void => {
+    alert(
+      "Funcionalidade de recuperação de senha em desenvolvimento!"
+    );
   };
 
-  const handleRegister = () => {
+  /**
+   * Ação para registro de novo usuário
+   * (Funcionalidade futura)
+   */
+  const handleRegister = (): void => {
     alert("Funcionalidade de registro em desenvolvimento!");
-    // Futuro: navigate('/registrar');
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-white p-5 rounded-lg shadow-md w-80">
-        <h1 className="text-center mb-5 text-xl font-bold">Acesse o sistema</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-5 rounded-lg shadow-md w-80"
+      >
+        <h1 className="text-center mb-5 text-xl font-bold">
+          Acesse o sistema
+        </h1>
+
+        {/* ===== E-MAIL ===== */}
         <div className="relative mb-4">
           <input
-            ref={usernameRef}
-            type="text"
+            ref={emailRef}
+            type="email"
             placeholder="E-mail"
             required
-            value={username}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full p-3 border border-gray-300 rounded"
           />
-          <FaUserIcon
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-            onClick={() => usernameRef.current?.focus()}
+
+          <IconeUsuario
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+            onClick={() => emailRef.current?.focus()}
           />
         </div>
+
+        {/* ===== SENHA ===== */}
         <div className="relative mb-4">
           <input
-            ref={passwordRef}
+            ref={senhaRef}
             type="password"
             placeholder="Senha"
             required
-            value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
             className="w-full p-3 border border-gray-300 rounded"
           />
-          <FaLockIcon
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
-            onClick={() => passwordRef.current?.focus()}
+
+          <IconeSenha
+            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+            onClick={() => senhaRef.current?.focus()}
           />
         </div>
-        <div className="flex justify-between items-center mb-4">
-          <label className="flex items-center">
-            <input type="checkbox" className="mr-2" />
+
+        {/* ===== OPÇÕES ===== */}
+        <div className="flex justify-between items-center mb-4 text-sm">
+          <label className="flex items-center gap-2">
+            <input type="checkbox" />
             Lembre de mim
           </label>
+
           <button
             type="button"
             onClick={handleForgotPassword}
@@ -83,10 +138,17 @@ const Login = () => {
             Esqueceu sua senha?
           </button>
         </div>
-        <button type="submit" className="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-700">
+
+        {/* ===== BOTÃO LOGIN ===== */}
+        <button
+          type="submit"
+          className="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
+        >
           Login
         </button>
-        <div className="text-center mt-4">
+
+        {/* ===== REGISTRO ===== */}
+        <div className="text-center mt-4 text-sm">
           <p>
             Não tem uma conta?{" "}
             <button

@@ -1,46 +1,94 @@
-# Getting Started with Create React App
+# 🛒 E-commerce React + TypeScript
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Projeto de **e-commerce** desenvolvido com **React**, **TypeScript** e **Context API**, focado em boas práticas de organização, componentização e documentação.
 
-## Available Scripts
+O projeto conta com páginas de catálogo, login, sobre, carrinho de compras e documentação automática com TypeDoc.
 
-In the project directory, you can run:
+---
+
+## 🚀 Tecnologias utilizadas
+
+- React
+- TypeScript
+- React Router DOM
+- Context API
+- Styled Components / CSS Modules (ajuste conforme você usou)
+- TypeDoc (documentação do código)
+- Lucide React / React Icons
+
+---
+
+## 📁 Estrutura do projeto
+
+src/
+├─ components/
+│ ├─ Header.tsx
+│ ├─ Footer.tsx
+│ └─ ...
+├─ context/
+│ └─ CartContext.tsx
+├─ pages/
+│ ├─ Home.tsx
+│ ├─ Catalogo.tsx
+│ ├─ Login.tsx
+│ └─ Sobre.tsx
+├─ types/
+├─ App.tsx
+└─ main.tsx
+
+
+---
+
+## ▶️ Como rodar o projeto
+
+No diretório do projeto, execute:
+
+### `npm install`
+
+Instala todas as dependências do projeto.
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Inicia a aplicação em modo de desenvolvimento.  
+Abra [http://localhost:3000](http://localhost:3000) no navegador.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `npm test`
+## 🏗️ Build para produção
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm run build
 
-### `npm run build`
+Gera a versão otimizada do projeto na pasta build.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+📚 Documentação do código
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Este projeto utiliza TypeDoc para gerar documentação automática do código TypeScript.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Gerar documentação:
+npx typedoc
 
-### `npm run eject`
+A documentação será gerada na pasta docs/.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+🧠 Funcionalidades
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Listagem de produtos (Catálogo)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Modal de detalhes do produto
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Carrinho de compras com Context API
 
-## Learn More
+Página de login (simulação)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Página institucional (Sobre)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Layout organizado com Header e Footer
+
+📌 Observações
+
+Este projeto tem fins educacionais e demonstrativos, podendo ser facilmente expandido para integração com APIs reais, autenticação e banco de dados.
+
+👨‍💻 Autor
+
+Desenvolvido por Grupo Klada (Marcos Kaiky, Maria Leticia, Andressa Fidellis, Dailma da Silva e Arila Raposo)
+Projeto acadêmico / portfólio

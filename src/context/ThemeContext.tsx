@@ -1,32 +1,58 @@
+/**
+ * Contexto responsável por gerenciar o tema da aplicação
+ * (modo claro e modo escuro).
+ */
+
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type Theme = "light" | "dark";
+/**
+ * Tipos de tema disponíveis
+ */
+type Tema = "light" | "dark";
 
-interface ThemeContextProps {
-  theme: Theme;
+/**
+ * Estrutura do contexto de tema
+ */
+interface ContextoTemaProps {
+  theme: Tema;
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextProps | null>(null);
+const ThemeContext = createContext<ContextoTemaProps | null>(null);
 
+/**
+ * Provedor do tema global da aplicação
+ */
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [temaAtual, setTemaAtual] = useState<Tema>("light");
 
-  const toggleTheme = () => {
-    setTheme(prev => (prev === "light" ? "dark" : "light"));
+  /**
+   * Alterna entre modo claro e escuro
+   */
+  const alternarTema = () => {
+    setTemaAtual((temaAnterior) =>
+      temaAnterior === "light" ? "dark" : "light"
+    );
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{ theme: temaAtual, toggleTheme: alternarTema }}
+    >
       {children}
     </ThemeContext.Provider>
   );
 };
 
+/**
+ * Hook para acessar o contexto de tema
+ */
 export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme deve ser usado dentro de ThemeProvider");
+  const contexto = useContext(ThemeContext);
+
+  if (!contexto) {
+    throw new Error("useTheme deve ser usado dentro de um ThemeProvider");
   }
-  return context;
+
+  return contexto;
 };

@@ -1,0 +1,14 @@
+{
+  "entryPoints": ["src"],
+  "entryPointStrategy": "expand",
+  "out": "docs",
+  "name": "Yabás Pratas – Documentação",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "hideGenerator": true,
+  "readme": "README.md",
+  "tsconfig": "tsconfig.json",
+  "plugin": ["typedoc-plugin-markdown"]
+}

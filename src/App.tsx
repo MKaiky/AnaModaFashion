@@ -1,3 +1,12 @@
+/**
+ * Arquivo principal da aplicação.
+ *
+ * Responsável por:
+ * - Definir os provedores globais (tema e carrinho)
+ * - Configurar as rotas da aplicação
+ * - Renderizar layout base (Header e Footer)
+ */
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -11,26 +20,25 @@ import Catalogo from "./pages/Catalogo";
 import CarrinhoDeCompras from "./pages/CarrinhoDeCompras";
 import Login from "./pages/Login";
 
+/**
+ * Componente raiz da aplicação
+ */
 function App() {
   return (
     <ThemeProvider>
       <CartProvider>
         <BrowserRouter>
-          <div className="min-h-screen flex flex-col">
-            <Header />
+          <Header />
 
-            <main className="flex-1">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/catalogo" element={<Catalogo />} />
-                <Route path="/sobre" element={<Sobre />} />
-                <Route path="/carrinho" element={<CarrinhoDeCompras />} />
-              </Routes>
-            </main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/sobre" element={<Sobre />} />
+            <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/carrinho" element={<CarrinhoDeCompras />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
 
-            <Footer />
-          </div>
+          <Footer />
         </BrowserRouter>
       </CartProvider>
     </ThemeProvider>

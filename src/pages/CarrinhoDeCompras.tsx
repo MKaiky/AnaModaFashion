@@ -1,28 +1,35 @@
+/**
+ * Página de Carrinho de Compras.
+ *
+ * Responsável por:
+ * - Exibir os produtos adicionados ao carrinho
+ * - Permitir alterar a quantidade de itens
+ * - Remover produtos
+ * - Exibir o resumo da compra
+ */
+
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { Minus, Plus, X } from "lucide-react";
 
-interface Product {
-  id: number;
-  title: string;
-  desc?: string;
-  price: number;
-  img: string;
-  category?: string;
-  quantity?: number;
-}
-
+/**
+ * Componente da página CarrinhoDeCompras
+ */
 const CarrinhoDeCompras: React.FC = () => {
   const { cart, updateQuantity, removeFromCart } = useCart();
 
+  /**
+   * Calcula o subtotal da compra com base
+   * no preço e quantidade de cada produto
+   */
   const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * (item.quantity ?? 1),
+    (soma, item) => soma + item.price * (item.quantity ?? 1),
     0
   );
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* HEADER */}
+      {/* CABEÇALHO */}
       <header className="bg-sky-custom text-white text-2xl py-5 text-center">
         Carrinho de compras — Yabás Pratas
       </header>
@@ -63,8 +70,12 @@ const CarrinhoDeCompras: React.FC = () => {
                           alt={item.title}
                           className="w-24 h-28 rounded-md object-cover"
                         />
+
                         <div>
-                          <div className="text-xl mb-1">{item.title}</div>
+                          <div className="text-xl mb-1">
+                            {item.title}
+                          </div>
+
                           {item.category && (
                             <div className="text-gray-600">
                               {item.category}
@@ -116,7 +127,7 @@ const CarrinhoDeCompras: React.FC = () => {
                       {(item.price * (item.quantity ?? 1)).toFixed(2)}
                     </td>
 
-                    {/* REMOVER */}
+                    {/* REMOVER ITEM */}
                     <td>
                       <button
                         onClick={() => removeFromCart(item.id)}
@@ -128,6 +139,7 @@ const CarrinhoDeCompras: React.FC = () => {
                   </tr>
                 ))}
 
+                {/* CARRINHO VAZIO */}
                 {cart.length === 0 && (
                   <tr>
                     <td
@@ -142,7 +154,7 @@ const CarrinhoDeCompras: React.FC = () => {
             </table>
           </section>
 
-          {/* RESUMO */}
+          {/* RESUMO DA COMPRA */}
           <aside className="w-full lg:w-[300px]">
             <div className="border border-gray-300 bg-gray-200 text-gray-800 rounded-xl overflow-hidden">
               <header className="py-4 px-5 text-lg border-b border-gray-300">
@@ -157,7 +169,9 @@ const CarrinhoDeCompras: React.FC = () => {
 
                 <div className="flex justify-between">
                   <span>Frete</span>
-                  <span className="text-green-600">Gratuito</span>
+                  <span className="text-green-600">
+                    Gratuito
+                  </span>
                 </div>
 
                 <button className="flex items-center gap-1 text-sky-custom hover:underline">
