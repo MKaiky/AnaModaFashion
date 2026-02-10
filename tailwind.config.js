@@ -1,22 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: "class",
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        title: ['"Playfair Display"', 'serif'],
+        body: ['Poppins', 'sans-serif'],
+      },
       colors: {
-        "sky-custom": "#89cff0",
-        "sky-custom-dark": "#3b82a6",   // azul escuro da marcas
-        "pastel-white": "#f0f4f8",
-        "pastel-blue": "#bbd0ff",
-        "pastel-yellow": "#fffacd",
-        "pastel-green": "#c7e5a1",
-        "pastel-pink": "#ffb3b3",
-        "pastel-lavender": "#e0b0ff",
-        "pastel-brown": "#e0c8b0",
-        "pastel-gray": "#d1d1d1",
+        primary: '#9E1B1B', // vermelho elegante
+        text: '#111111',
+        background: '#F7F7F7',
       },
     },
   },
   plugins: [],
-};
+}

@@ -1,112 +1,55 @@
-/**
- * Contexto responsável por gerenciar o carrinho de compras
- * da aplicação.
- */
+import { createContext, useContext, useState, ReactNode } from "react";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-
-/**
- * Estrutura de um produto
- */
-export interface Produto {
+export type CartItem = {
   id: number;
-  title: string;
-  desc?: string;
+  name: string;
   price: number;
-  img: string;
-  category?: string;
-  quantity?: number;
-}
+  quantity: number;
+};
 
-/**
- * Estrutura do contexto do carrinho
- */
-interface ContextoCarrinhoProps {
-  cart: Produto[];
-  addToCart: (produto: Produto) => void;
+type CartContextType = {
+  cart: CartItem[];
+  addToCart: (item: Omit<CartItem, "quantity">) => void;
   removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, quantidade: number) => void;
   clearCart: () => void;
-}
+};
 
-const CartContext = createContext<ContextoCarrinhoProps | undefined>(undefined);
+const CartContext = createContext<CartContextType>({} as CartContextType);
 
-/**
- * Provedor global do carrinho de compras
- */
-export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [itensCarrinho, setItensCarrinho] = useState<Produto[]>([]);
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [cart, setCart] = useState<CartItem[]>([]);
 
-  /**
-   * Adiciona um produto ao carrinho
-   */
-  const adicionarAoCarrinho = (produto: Produto) => {
-    setItensCarrinho((itensAnteriores) => {
-      const produtoExistente = itensAnteriores.find(
-        (item) => item.id === produto.id
-      );
-
-      if (produtoExistente) {
-        return itensAnteriores.map((item) =>
-          item.id === produto.id
-            ? { ...item, quantity: (item.quantity ?? 1) + 1 }
-            : item
+  function addToCart(item: Omit<CartItem, "quantity">) {
+    setCart(prev => {
+      const existing = prev.find(p => p.id === item.id);
+      if (existing) {
+        return prev.map(p =>
+          p.id === item.id
+            ? { ...p, quantity: p.quantity + 1 }
+            : p
         );
       }
-
-      return [...itensAnteriores, { ...produto, quantity: 1 }];
+      return [...prev, { ...item, quantity: 1 }];
     });
-  };
+  }
 
-  /**
-   * Remove um produto do carrinho
-   */
-  const removerDoCarrinho = (id: number) => {
-    setItensCarrinho((itens) => itens.filter((item) => item.id !== id));
-  };
+  function removeFromCart(id: number) {
+    setCart(prev => prev.filter(p => p.id !== id));
+  }
 
-  /**
-   * Atualiza a quantidade de um produto
-   */
-  const atualizarQuantidade = (id: number, quantidade: number) => {
-    setItensCarrinho((itens) =>
-      itens.map((item) =>
-        item.id === id ? { ...item, quantity: quantidade } : item
-      )
-    );
-  };
-
-  /**
-   * Limpa completamente o carrinho
-   */
-  const limparCarrinho = () => {
-    setItensCarrinho([]);
-  };
+  function clearCart() {
+    setCart([]);
+  }
 
   return (
     <CartContext.Provider
-      value={{
-        cart: itensCarrinho,
-        addToCart: adicionarAoCarrinho,
-        removeFromCart: removerDoCarrinho,
-        updateQuantity: atualizarQuantidade,
-        clearCart: limparCarrinho,
-      }}
+      value={{ cart, addToCart, removeFromCart, clearCart }}
     >
       {children}
     </CartContext.Provider>
   );
-};
+}
 
-/**
- * Hook para acessar o carrinho
- */
-export const useCart = () => {
-  const contexto = useContext(CartContext);
-
-  if (!contexto) {
-    throw new Error("useCart deve ser usado dentro de um CartProvider");
-  }
-
-  return contexto;
-};
+export function useCart() {
+  return useContext(CartContext);
+}
